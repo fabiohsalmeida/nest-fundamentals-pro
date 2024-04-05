@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Req } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './create-song-dto';
 
@@ -13,7 +13,13 @@ export class SongsController {
 
     @Get()
     findAll() {
-        return this.songsService.findAll()
+        try {
+            return this.songsService.findAll()
+        } catch(e) {
+            throw new HttpException(
+                'error', HttpStatus.FORBIDDEN
+            )
+        }
     }
 
     @Get(':id')
