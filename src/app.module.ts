@@ -6,6 +6,7 @@ import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { SongsController } from './songs/songs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { Song } from './songs/song.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { DataSource } from 'typeorm';
         port: 5432,
         username: 'myuser',
         password: 'secret',
-        entities: [],
+        entities: [Song],
         // Never use in production it, it will erase part of database
         synchronize: true
       }

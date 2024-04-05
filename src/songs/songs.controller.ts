@@ -1,13 +1,14 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Req } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './create-song-dto';
+import { Song } from './song.entity';
 
 @Controller('songs')
 export class SongsController {
     constructor(private songsService: SongsService) {}
 
     @Post()
-    createNewSong(@Body() createSongDto: CreateSongDto) {
+    createNewSong(@Body() createSongDto: CreateSongDto): Promise<Song> {
         return this.songsService.create(createSongDto)
     }
 
