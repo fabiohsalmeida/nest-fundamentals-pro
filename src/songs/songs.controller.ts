@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Req } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './create-song-dto';
 
@@ -23,8 +23,11 @@ export class SongsController {
     }
 
     @Get(':id')
-    getSongById(@Param() params) {
-        return `Get song by id ${params.id}`
+    getSongById(@Param(
+        'id',
+        new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })
+    ) id: number) {
+        return `Get song by id ${id}`
     }
 
     @Put(':id')
