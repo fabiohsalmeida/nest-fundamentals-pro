@@ -7,6 +7,9 @@ import { SongsController } from './songs/songs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Song } from './songs/song.entity';
+import { Artist } from './artists/artist.entity';
+import { User } from './users/user.entity';
+import { ArtistsModule } from './artists/artists.module';
 
 @Module({
   imports: [
@@ -18,12 +21,13 @@ import { Song } from './songs/song.entity';
         port: 5432,
         username: 'myuser',
         password: 'secret',
-        entities: [Song],
+        entities: [Song, Artist, User],
         // Never use in production it, it will erase part of database
         synchronize: true
       }
     ),
-    SongsModule
+    SongsModule,
+    ArtistsModule
   ],
   controllers: [AppController],
   providers: [AppService],
