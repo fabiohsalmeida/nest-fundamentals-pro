@@ -5,6 +5,7 @@ import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { LoginDto } from 'src/auth/dto/login.dto';
+import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
 export class UsersService {
@@ -39,5 +40,11 @@ export class UsersService {
 
     async disable2FactorAuthentication(id: number): Promise<UpdateResult> {
         return await this.usersRepository.update(id, {twoFASecret: null, enable2FA: false});
+    }
+
+    async generateApiKey(id: number): Promise<string> {
+        const apiKey: string = uuid4();
+        await this.usersRepository.update(id, { apiKey: apiKey });
+        return apiKey;
     }
 }

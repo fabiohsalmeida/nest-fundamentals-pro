@@ -28,7 +28,7 @@ export class AuthController {
     login(
         @Body()
         loginDto: LoginDto
-    ) : Promise<any> {
+    ) : Promise<{ accessToken: string } | { validate2FA: string; message: string }> {
         return this.authService.login(loginDto);
     }
 
@@ -67,5 +67,14 @@ export class AuthController {
             request.user.userId,
             validateTokenDto.token
         );
+    }
+
+    @Post('generate-apikey')
+    @UseGuards(JwtGuard)
+    generateApiKeyToUser(
+        @Request()
+        request
+    ) : Promise<{ apiKey: string }> {
+        return this.authService.generateApiKeyToUser(request.user.userId);
     }
 }
