@@ -8,6 +8,7 @@ import { ArtistsService } from 'src/artists/artists.service';
 import { Payload } from './types/payload.type';
 import * as speakeasy from 'speakeasy';
 import { Enable2FAType } from './types/enable2fa.type';
+import { UpdateResult } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -71,5 +72,21 @@ export class AuthService {
         } catch(err) {
             throw new UnauthorizedException("Error verifying token");
         }
+    }
+
+    async disable2FactorAuthentication(
+        userId: number,
+        token: string
+    ): Promise<UpdateResult> {
+        const tokenValidationResponse = await this.validate2FactorAuthenticationToken(
+            userId,
+            token
+        );
+
+        if (tokenValidationResponse.verified) {
+            return this.usersService.disable2FactorAuthentication(userId);
+        }
+
+        throw new UnauthorizedException("Unable to disable two factor authentication");
     }
 }

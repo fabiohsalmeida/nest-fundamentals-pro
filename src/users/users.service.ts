@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { LoginDto } from 'src/auth/dto/login.dto';
@@ -35,5 +35,9 @@ export class UsersService {
     
     async updateSecretKey(id: number, twoFASecret: string) {
         await this.usersRepository.update(id, {twoFASecret: twoFASecret, enable2FA: true});
+    }
+
+    async disable2FactorAuthentication(id: number): Promise<UpdateResult> {
+        return await this.usersRepository.update(id, {twoFASecret: null, enable2FA: false});
     }
 }
