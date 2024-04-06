@@ -10,10 +10,10 @@ export class Playlist {
     @Column()
     name: string;
 
-    // @OneToMany(() => Song, (song) => song.playlist)
-    // songs: Song[];
+    @OneToMany(() => Song, (song) => song.playlist)
+    songs: Song[];
 
-    // @ManyToOne(() => User, (user) => user.playlists)
-    // user: User;
+    @ManyToOne(() => User, (user) => user.playlists)
+    user: User;
 
 }

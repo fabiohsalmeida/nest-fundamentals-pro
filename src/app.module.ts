@@ -10,6 +10,8 @@ import { Song } from './songs/song.entity';
 import { Artist } from './artists/artist.entity';
 import { User } from './users/user.entity';
 import { ArtistsModule } from './artists/artists.module';
+import { Playlist } from './playlists/playlist.entity';
+import { PlaylistsModule } from './playlists/playlists.module';
 
 @Module({
   imports: [
@@ -21,13 +23,14 @@ import { ArtistsModule } from './artists/artists.module';
         port: 5432,
         username: 'myuser',
         password: 'secret',
-        entities: [Song, Artist, User],
+        entities: [Song, Artist, User, Playlist],
         // Never use in production it, it will erase part of database
         synchronize: true
       }
     ),
     SongsModule,
-    ArtistsModule
+    ArtistsModule,
+    PlaylistsModule
   ],
   controllers: [AppController],
   providers: [AppService],
