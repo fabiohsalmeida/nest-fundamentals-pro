@@ -28,4 +28,12 @@ export class UsersService {
         }
         return user;
     }
+
+    async findById(userId: number) : Promise<User> {
+        return await this.usersRepository.findOneBy({id: userId});
+    }
+    
+    async updateSecretKey(id: number, twoFASecret: string) {
+        await this.usersRepository.update(id, {twoFASecret: twoFASecret, enable2FA: true});
+    }
 }

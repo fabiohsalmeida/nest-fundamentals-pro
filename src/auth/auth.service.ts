@@ -6,6 +6,8 @@ import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ArtistsService } from 'src/artists/artists.service';
 import { Payload } from './types/payload.type';
+import * as speakeasy from 'speakeasy';
+import { Enable2FAType } from './types/enable2fa.type';
 
 @Injectable()
 export class AuthService {
@@ -37,5 +39,16 @@ export class AuthService {
         } else {
             throw new UnauthorizedException("Invalid password");
         }
+    }
+
+    async enable2FactorAuthentication(userId: number): Promise<Enable2FAType> {
+        const user = await this.usersService.findById(userId);
+        if (user.enable2FA) {
+            return { secret:user.twoFASecret };
+        }
+        const secret = speakeasy.generateSecret();
+        user.twoFASecret = secret.base32;
+        await this.usersService.updateSecretKey(user.id, user.twoFASecret);
+        return { secret: user.twoFASecret };
     }
 }
