@@ -44,4 +44,11 @@ export class SongsService {
     async paginate(options: IPaginationOptions) : Promise<Pagination<Song>> {
         return paginate<Song>(this.songsRepository, options);
     }
+
+    async paginateAndOrder(options: IPaginationOptions) : Promise<Pagination<Song>> {
+        const queryBuilder = this.songsRepository.createQueryBuilder('c');
+        queryBuilder.orderBy('c.releasedDate', 'DESC');
+
+        return paginate<Song>(queryBuilder, options);
+    }
 }

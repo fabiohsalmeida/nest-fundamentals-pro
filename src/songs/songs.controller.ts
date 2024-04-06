@@ -15,6 +15,23 @@ export class SongsController {
         return this.songsService.create(createSongDto)
     }
 
+    @Get('all')
+    getAllSongs() {
+        return this.songsService.findAll();
+    }
+
+    @Get('ordered')
+    getAllSongsPaginatedAndOrdered(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe)
+        page: number = 1,
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe)
+        limit: number = 10
+    ) {
+        limit = limit > 100 ? 100 : limit;
+
+        return this.songsService.paginateAndOrder({page, limit});
+    }
+
     @Get()
     findAll(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe)
