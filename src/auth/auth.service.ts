@@ -18,7 +18,9 @@ export class AuthService {
         private artistsService: ArtistsService
     ) {}
 
-    async login(loginDto: LoginDto) : Promise<{ accessToken: string }> {
+    async login(
+        loginDto: LoginDto
+    ) : Promise<{ accessToken: string} | { validate2FA: string; message: string }> {
         const user = await this.usersService.findOne(loginDto);
         const passwordMatched = await bcrypt.compare(
             loginDto.password,
@@ -32,6 +34,13 @@ export class AuthService {
             const artist = await this.artistsService.findArtist(user.id);
             if (artist) {
                 payload.artistId = artist.id
+            }
+
+            if (user.enable2FA && user.twoFASecret) {
+                return {
+                    validate2FA: 'http://localhost:3000/auth/validate2-fa',
+                    message: 'Insert your two factor authenticator token'
+                }
             }
 
             return {
