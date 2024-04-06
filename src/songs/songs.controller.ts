@@ -1,17 +1,23 @@
-import { Body, Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, Req, Request, UseGuards } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song-dto';
 import { Song } from './song.entity';
 import { UpdateResult } from 'typeorm';
 import { UpdateSongDto } from './dto/update-song-dto';
 import { Pagination } from 'nestjs-typeorm-paginate/dist/pagination';
+import { JwtArtistGuard } from 'src/auth/artist.guard';
 
 @Controller('songs')
 export class SongsController {
     constructor(private songsService: SongsService) {}
 
     @Post()
-    createNewSong(@Body() createSongDto: CreateSongDto): Promise<Song> {
+    @UseGuards(JwtArtistGuard)
+    createNewSong(
+        @Body() createSongDto: CreateSongDto,
+        @Request() request
+    ): Promise<Song> {
+        console.log(request.user);
         return this.songsService.create(createSongDto)
     }
 

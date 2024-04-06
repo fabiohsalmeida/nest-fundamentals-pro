@@ -21,4 +21,8 @@ export class ArtistsService {
     async getPaginatedArtists(options: IPaginationOptions) : Promise<Pagination<Artist>> {
         return await paginate<Artist>(this.artistsRepository, options);
     }
+
+    async findArtist(id: number) : Promise<Artist> {
+        return await this.artistsRepository.findOneBy({user: {id: id}});
+    }
 }
