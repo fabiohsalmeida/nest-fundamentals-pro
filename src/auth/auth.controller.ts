@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { Enable2FAType } from './types/enable2fa.type';
 import { JwtGuard } from './jwt.guard';
+import { ValidateTokenDto } from './dto/validate-token.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -37,5 +38,19 @@ export class AuthController {
         request
     ) : Promise<Enable2FAType> {
         return this.authService.enable2FactorAuthentication(request.user.userId);
+    }
+
+    @Post('validate-2fa')
+    @UseGuards(JwtGuard)
+    validate2FactorAuthentication(
+        @Request()
+        request,
+        @Body()
+        validateTokenDto: ValidateTokenDto,
+    ) : Promise<{ verified: boolean }> {
+        return this.authService.validate2FactorAuthenticationToken(
+            request.user.userId,
+            validateTokenDto.token
+        );
     }
 }
