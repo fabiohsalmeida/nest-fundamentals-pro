@@ -6,30 +6,15 @@ import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { SongsController } from './songs/songs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { Song } from './songs/song.entity';
-import { Artist } from './artists/artist.entity';
-import { User } from './users/user.entity';
 import { ArtistsModule } from './artists/artists.module';
-import { Playlist } from './playlists/playlist.entity';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { dataSourceOptions } from 'db/data-source';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(
-      {
-        type: 'postgres',
-        database: 'nest-spotify-like-project',
-        host: 'localhost',
-        port: 5432,
-        username: 'myuser',
-        password: 'secret',
-        entities: [Song, Artist, User, Playlist],
-        // Never use in production it, it will erase part of database
-        synchronize: true
-      }
-    ),
+    TypeOrmModule.forRoot(dataSourceOptions),
     SongsModule,
     ArtistsModule,
     PlaylistsModule,
