@@ -10,12 +10,19 @@ import { ArtistsModule } from './artists/artists.module';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { dataSourceOptions } from 'db/data-source';
+import { typeOrmAsyncConfig } from 'db/data-source';
 import { SeedModule } from './seed/seed.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    ConfigModule.forRoot({
+      envFilePath: ['.env/development.env','.env/production.env'],
+      isGlobal: true,
+      load: [configuration]
+    }),
     SongsModule,
     ArtistsModule,
     PlaylistsModule,
