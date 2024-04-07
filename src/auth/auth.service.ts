@@ -99,7 +99,6 @@ export class AuthService {
         throw new UnauthorizedException("Unable to disable two factor authentication");
     }
 
-
     async generateApiKeyToUser(
         userId: number
     ): Promise<{ apiKey: string; }> {
@@ -109,5 +108,9 @@ export class AuthService {
         }
         const apiKey = await this.usersService.generateApiKey(userId);
         return {apiKey: apiKey};
+    }
+
+    async validateUserByApiKey(apiKey: string): Promise<User> {
+        return await this.usersService.findByApiKey(apiKey);
     }
 }

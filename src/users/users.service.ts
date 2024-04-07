@@ -44,7 +44,11 @@ export class UsersService {
 
     async generateApiKey(id: number): Promise<string> {
         const apiKey: string = uuid4();
-        await this.usersRepository.update(id, { apiKey: apiKey });
+        await this.usersRepository.update(id, { apiKey });
         return apiKey;
+    }
+
+    async findByApiKey(apiKey: string): Promise<User> {
+        return await this.usersRepository.findOneBy({ apiKey });
     }
 }
