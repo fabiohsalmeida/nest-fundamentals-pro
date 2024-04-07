@@ -95,3 +95,6 @@ export class AuthController {
 ```
 
 Probably it's something inside passport-http-bearer bind to it, need to check it after.
+
+# Unable to do those modules:
+- Module 8 - 05:24:29 - Validate Env Variables: I just was not able to create the DTO???
