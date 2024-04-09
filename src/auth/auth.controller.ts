@@ -33,6 +33,11 @@ export class AuthController {
     }
 
     @Post('login')
+    @ApiOperation({ summary: 'Login user' })
+    @ApiResponse({
+        status: 200,
+        description: 'It will give you the access_token in response'
+    })
     login(
         @Body()
         loginDto: LoginDto
