@@ -98,3 +98,4 @@ Probably it's something inside passport-http-bearer bind to it, need to check it
 
 # Unable to do those modules:
 - Module 8 - 05:24:29 - Validate Env Variables: I just was not able to create the DTO???
+- Module 8 - 05:35:48 - Hot Module Reloading: I just skiped that, I know that webpack is a complex theme and I want to look it in other time

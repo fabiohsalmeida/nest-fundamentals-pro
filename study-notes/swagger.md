@@ -2,10 +2,34 @@
 
 ## Import dependencies
 
+### Installs
 Import the swagger dependency of nestjs: ``npm i @nestjs/swagger``
 
-## Configure the code
+### Aditional external configurations
+Include the plugin in ``nest-cli.json``:
 
+```json
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+  //here
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "introspectComments": true
+        }
+      }
+    ]
+  },
+}
+
+```
+
+## Configure the code
 ### main.js
 
 ```ts
@@ -35,3 +59,40 @@ async function bootstrap() {
 bootstrap();
 ```
 
+### Define a tag to a group of routes
+
+Go to the controller and add ``@ApiTags('tagName')``
+
+Example:
+```ts
+...
+@ApiTags('auth')
+@Controller('auth')
+export class AuthController {
+    ...
+}
+```
+
+### Define a route with informations
+
+```ts
+...
+@ApiTags('auth')
+@Controller('auth')
+export class AuthController {
+    ...
+    @Post('signup')
+    @ApiOperation({ summary: 'Register new user' })
+    @ApiResponse({ 
+        status: 201,
+        description: 'It will return the user in the response'
+     })
+    signup(
+        @Body()
+        userDto: CreateUserDto
+    ) : Promise<User> {
+        return this.usersService.create(userDto);
+    }
+    ...
+}
+```
