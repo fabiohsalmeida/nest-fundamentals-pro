@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsArray, IsDateString, IsMilitaryTime, IsOptional, IsNumber } from "class-validator";
 
-export class UpdateSongDto {
+export class UpdateSongRequestDto {
     @IsString()
     @IsOptional()
     @IsNotEmpty()

@@ -1,0 +1,16 @@
+### All the skiped parts
+- Module 8 - 05:24:29 - Validate Env Variables: I just was not able to create the DTO???
+- Module 8 - 05:35:48 - Hot Module Reloading: I just skiped that, I know that webpack is a complex theme and I want to look it in other time
+- Whole Module 10:
+  - Module 10 - 06:11:40 Install MongoDB using Docker Compose
+  - Module 10 - 06:18:16 Connect with MongoDB
+  - Module 10 - 06:21:24 Create Schema
+  - Module 10 - 06:24:56 Save Record in Mongo Collection
+  - Module 10 - 06:33:08 Find and Delete
+  - Module 10 - 06:38:47 Populate
+- Whole Module 11
+  - 06:52:18 Configure Dev and Production Env
+  - 07:01:22 Push Source Code to Github Repo
+  - 07:06:38 Deploy NestJS Project to Railway
+  - 07:15:44 Install Dotenv to work with TypeORM migrations
+  - 07:20:20 Fixing Env Bugs
